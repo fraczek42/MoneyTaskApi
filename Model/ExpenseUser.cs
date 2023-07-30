@@ -32,9 +32,6 @@ namespace MoneyTaskApi.Model
         [Column("next_occurrence")]
         public DateTime? NextOccurrence { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
-
         [ForeignKey("CategoryId")]
         public CategoryExpense Category { get; set; }
     }

@@ -20,15 +20,12 @@ namespace MoneyTaskApi.Controllers
         [HttpGet("getExpenses")]
         public async Task<IActionResult> GetExpenses()
         {
-            var expenses = await _context.ExpensesUser
-                .Select(e => new
-                {
-                    Id = e.Id,
-                    Description = e.Description,
-                    Amount = e.Amount,
-                    ExpenseDate = e.ExpenseDate
-                })
-                .ToListAsync();
+            var expenses = await _context.ExpensesUser.ToListAsync();
+            foreach (var expense in expenses)
+            {
+                expense.Category = await _context.CategoriesExpenses
+                    .FirstOrDefaultAsync(c => c.Id == expense.CategoryId);
+            }
 
             return Ok(expenses);
         }
